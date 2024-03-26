@@ -1,25 +1,10 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
 
-const url = 'https://fakestoreapi.com'
-
 function ProductCart() {
-  const [cart,setCart] = useState([])
-
-  //read the carts data
-  const readCart = async()=>{
-    await axios.get(`${url}/carts`)
-    .then(res => {
-      // console.log(`carts=`,res.data)
-      setCart(res.data[0])
-    }).catch(err => toast.error(err.response.data.msg))
-  }
-
-  useEffect(()=>{
-    readCart()
-  },[])
+  const [cart,setCart] = useState(false)
 
   return (
     <div className="container">
@@ -36,6 +21,21 @@ function ProductCart() {
                 <th>Action</th>
               </tr>
             </thead>
+            <tbody>
+              {
+                cart && cart.products.map((item,index) =>{
+                  return(
+                    <tr>
+                      <th>Title</th>
+                      <th>Image</th>
+                      <th>Price</th>
+                      <th>Quantity</th>
+                      <th>Action</th>
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
           </table>
         </div>
       </div>
